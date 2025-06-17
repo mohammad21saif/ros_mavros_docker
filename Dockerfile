@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM nvcr.io/nvidia/l4t-base:r32.7.1
 ARG USERNAME
 ARG USER_UID
 ARG USER_GID=$USER_UID
@@ -20,9 +20,16 @@ ENV TZ=Europe/Berlin
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Setup the sources
-RUN apt-get update && apt-get install -y software-properties-common curl sudo && \
-    sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' && \
-    curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    curl \
+    sudo \
+    lsb-release \
+    gnupg2 && \
+    curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc -o /usr/share/keyrings/ros-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" \
+    > /etc/apt/sources.list.d/ros-latest.list
+
 
 # Install ROS Noetic packages
 RUN apt-get update && apt-get upgrade -y && \
