@@ -1,4 +1,5 @@
-FROM nvcr.io/nvidia/l4t-base:r32.7.1
+# FROM nvcr.io/nvidia/l4t-base:r32.7.1
+FROM nvcr.io/nvidia/l4t-base:r35.3.1
 ARG USERNAME
 ARG USER_UID
 ARG USER_GID=$USER_UID
