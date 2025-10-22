@@ -38,7 +38,7 @@ RUN rosinstall_generator mavros mavros_extras --rosdistro noetic --deps --wet-on
 WORKDIR /root/catkin_ws
 
 # Initialize rosdep and install dependencies
-RUN rosdep init \
+RUN rosdep init || true \
     && rosdep update \
     && rosdep install --from-paths src --ignore-src --rosdistro noetic -y
 
