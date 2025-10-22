@@ -4,6 +4,11 @@ FROM dustynv/ros:noetic-ros-base-l4t-r35.2.1
 # Prevent interactive prompts
 ENV DEBIAN_FRONTEND=noninteractive
 
+RUN sudo rm -f /etc/apt/sources.list.d/ros-*.list
+RUN sudo rm -f /etc/apt/sources.list.d/ros-latest.list
+RUN sudo rm -f /etc/apt/sources.list.d/ros1-latest.list
+
+
 # Update system and install base tools
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
