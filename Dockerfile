@@ -31,7 +31,6 @@ RUN mkdir -p /root/catkin_ws/src
 
 WORKDIR /root/catkin_ws/src
 
-RUN sudo apt-get remove python3-rosinstall
 RUN pip3 install rosinstall
 # Download MAVROS + extras source
 RUN rosinstall_generator mavros mavros_extras --rosdistro noetic --deps --wet-only --tar > /root/noetic-mavros.rosinstall \
