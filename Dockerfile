@@ -21,7 +21,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-vcstool \
     geographiclib-tools \
     && rm -rf /var/lib/apt/lists/*
-
+    
+RUN sudo dpkg --configure -a
 # Upgrade pip and install catkin tools
 RUN pip3 install catkin-tools rosdistro rosinstall
 
