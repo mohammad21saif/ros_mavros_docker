@@ -24,14 +24,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Upgrade pip and install catkin tools
 RUN pip3 install --upgrade pip
-RUN pip3 install catkin-tools rosdistro
+RUN pip3 install catkin-tools rosdistro rosinstall
 
 # Setup ROS workspace for MAVROS
 RUN mkdir -p /root/catkin_ws/src
 
 WORKDIR /root/catkin_ws/src
 
-RUN pip3 install rosinstall
 # Download MAVROS + extras source
 RUN rosinstall_generator mavros mavros_extras --rosdistro noetic --deps --wet-only --tar > /root/noetic-mavros.rosinstall \
     && vcs import < /root/noetic-mavros.rosinstall
@@ -39,9 +38,9 @@ RUN rosinstall_generator mavros mavros_extras --rosdistro noetic --deps --wet-on
 WORKDIR /root/catkin_ws
 
 # Initialize rosdep and install dependencies
-RUN rosdep init || true \
-    && rosdep update \
-    && rosdep install --from-paths src --ignore-src --rosdistro noetic -y
+RUN rosdep update
+
+RUN rosdep install --from-paths src --ignore-src --rosdistro noetic -y
 
 # Build MAVROS
 RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && catkin build"
