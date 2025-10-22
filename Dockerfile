@@ -23,7 +23,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Upgrade pip and install catkin tools
-RUN pip3 install --upgrade pip
 RUN pip3 install catkin-tools rosdistro rosinstall
 
 # Setup ROS workspace for MAVROS
